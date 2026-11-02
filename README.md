@@ -3,6 +3,8 @@
 > [!IMPORTANT]  
 > This document is not intended to represent final state or production best-practices for GitOps with Fleet Manager.
 
+The standard [AKS store demo repository](https://github.com/azure-samples/aks-store-demo) contains the necessary artifacts.
+
 1. Create a Fleet Manager with a hub cluster.
 
 1. Setup a group of clusters and add to the fleet. Label members with label `appgroup` set to `dev`, `test`, `prod` (you can also split prod into `proda` and `prodb` if you want). 
@@ -46,10 +48,11 @@
 
 1. Next, let's wire up the GitOps deployment to bring the necessary Flux resources onto the Fleet Manager hub cluster. Use [05-wire-up-gitops-hub.yaml](./manifests/05-wire-up-gitops-hub.yaml) to stage the `HelmRepository` and `HelmRelease` Flux resources on the hub cluster. Both are set to `suspend=true` so they don't attempt to reconcile on the Fleet Manager hub cluster.
 
-1. The repository that is synchronized by Flux includes a Fleet Manager namespace-scoped resource placement ([06-aks-store-components-pick-clusters.yaml](./manifests/06-aks-store-components-pick-clusters.yaml)) that targets only clusters with the `appgroup` label and uses a rollout strategy of `External`. The external strategy allows use of a staged rollout (StagedUpdateRun) to deploy the application across our clusters.
+1. The repository that is synchronized by Flux includes a Fleet Manager namespace-scoped resource placement ([06-aks-store-components-pick-clusters.yaml](./manifests/06-aks-store-components-pick-clusters.yaml)) that targets only clusters with the `appgroup` label and has its rollout strategy set to `External`. The external strategy allows use of a staged rollout (StagedUpdateRun) to deploy the application across our clusters.
 
-    1. Additionally, there is an Fleet Manager namespace-scoped resource override ([07-override-components.yaml](./manifests/07-override-components.yaml)) included in the respository which removes the `suspend=true` when the resources are placed on matching member clusters.
+    1. There is also an Fleet Manager namespace-scoped resource override ([07-override-components.yaml](./manifests/07-override-components.yaml)) included in the respository which removes the `suspend=true` when the resources are placed on matching member clusters.
 
 1. Finally, to create the rollout apply the [08-rollout-app.yaml](./manifests/08-rollout-app.yaml) to the Fleet Manager hub cluster. Patch to the state to start the rollout, or use the Fleet Manager Azure portal experience to manually start. You can also manually create the rollout via the Azure portal within Fleet Manager by choosing Fleet resources > Resource placements > Staged rollout runs > Create.
 
+    ![Create a staged rollout run in Fleet Manager](./img/create-rollout-run.png)
 
