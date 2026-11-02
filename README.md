@@ -1,10 +1,13 @@
-# aks-store-advance-gitops
+# AKS Store Demo Advanced GitOps
+
+> [!IMPORTANT]  
+> This document is not intended to represent final state or production best-practices for GitOps with Fleet Manager.
 
 1. Create a Fleet Manager with a hub cluster.
 
 1. Setup a group of clusters and add to the fleet. Label members with label `appgroup` set to `dev`, `test`, `prod` (you can also split prod into `proda` and `prodb` if you want). 
 
-1. Make sure to enable the Flux extension on all clusters and the Fleet Manager hub cluster.
+1. Make sure to enable the Flux extension on all clusters and the Fleet Manager hub cluster. You **don't** need to create a FluxConfig resource.
 
     Fleet:
 
@@ -28,7 +31,7 @@
         --scope cluster
     ```
 
-1. Create `aks-store-demo` namespace on hub cluster.
+1. Create `aks-store-demo` namespace on hub cluster. You can use the Azure portal to manually create a namespace, or "Apply a YAML" that defines the namespace, or use kubectl connected to the Fleet Manager hub cluster (get credentials by using `az fleet get-credentials` with an authorized user).
 
 1. Distribute to only clusters with `appgroup` label. See [01-aks-store-namespace-crp.yaml](./manifests/01-aks-store-namespace-crp.yaml).
 
