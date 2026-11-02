@@ -39,7 +39,7 @@
 
 1. Apply the Flux authorization across all the member clusters as well by using resource placement to distribute. See [03-distribute-flux-authorization.yaml](./manifests/03-distribute-flux-authorization.yaml).
 
-1. So we can control the rollout of the application, we will define a strategy by applying it to the hub cluster using the [04-app-staged-rollout-strategy.yaml](04-app-staged-rollout-strategy.yaml) manifest applied on the hub cluster.
+1. So we can control the rollout of the application, we will define a strategy by applying it to the hub cluster using the [04-app-staged-rollout-strategy.yaml](./manifests/04-app-staged-rollout-strategy.yaml) manifest applied on the hub cluster.
 
 1. Next, let's wire up the GitOps deployment to bring the necessary Flux bits into the Fleet Manager hub cluster. Use [05-wire-up-gitops-hub.yaml](./manifests/05-wire-up-gitops-hub.yaml) to stage the `HelmRepository` and `HelmRelease` Flux resources on the hub cluster. Both are set to `suspend=true` so they don't attempt to reconcile on the Fleet Manager hub cluster.
 
