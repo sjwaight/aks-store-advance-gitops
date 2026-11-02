@@ -31,9 +31,9 @@
         --scope cluster
     ```
 
-1. Create `aks-store-demo` namespace on hub cluster. You can use the Azure portal to manually create a namespace, or "Apply a YAML" that defines the namespace, or use kubectl connected to the Fleet Manager hub cluster (get credentials by using `az fleet get-credentials` with an authorized user).
+1. Create `aks-store-demo` namespace on hub cluster. You can use the Azure portal to manually create a namespace, or "Apply a YAML" that defines the namespace, or use `kubectl` connected to the Fleet Manager hub cluster (get credentials by using `az fleet get-credentials` with an authorized user).
 
-1. Distribute to only clusters with `appgroup` label. See [01-aks-store-namespace-crp.yaml](./manifests/01-aks-store-namespace-crp.yaml).
+1. Distribute to only clusters with `appgroup` label. See [01-aks-store-namespace-crp.yaml](./manifests/01-aks-store-namespace-crp.yaml). Apply using the Azure portal by using "Apply a YAML" option from the Fleet Resources > Namespaces option under the fleet, or use `kubectl` to apply the YAML via the Kubernetes API. 
 
 1. Create the necessary authorization for Flux to manipulate resources within the `aks-store-demo` namespace by applying the  [02-flux-authorization-hub-namespace.yaml](./manifests/02-flux-authorization-hub-namespace.yaml) file.
 
